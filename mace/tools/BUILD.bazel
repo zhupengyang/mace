@@ -28,8 +28,6 @@ cc_binary(
         "-DMACE_ENABLE_HEXAGON",
     ]) + if_qnn_enabled([
         "-DMACE_ENABLE_QNN",
-    ]) + if_apu_enabled([
-        "-DMACE_ENABLE_MTK_APU",
     ]) + if_fp16_enabled([
         "-DMACE_ENABLE_FP16",
     ]) + if_bfloat16_enabled([
@@ -60,8 +58,6 @@ cc_binary(
         "-DMACE_ENABLE_HEXAGON",
     ]) + if_qnn_enabled([
         "-DMACE_ENABLE_QNN",
-    ]) + if_apu_enabled([
-        "-DMACE_ENABLE_MTK_APU",
     ]) + if_fp16_enabled([
         "-DMACE_ENABLE_FP16",
     ]) + if_bfloat16_enabled([

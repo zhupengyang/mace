@@ -50,9 +50,6 @@ class MaceEngineCfgImpl {
                                  const std::string &binary_file,
                                  const std::string &storage_file);
 
-  MaceStatus SetAPUHints(uint8_t boost_hint,
-                         APUPreferenceHint preference_hint);
-
   int num_threads() const;
 
   CPUAffinityPolicy cpu_affinity_policy() const;
@@ -73,10 +70,6 @@ class MaceEngineCfgImpl {
 
   AcceleratorCachePolicy accelerator_cache_policy() const;
 
-  uint8_t apu_boost_hint() const;
-
-  APUPreferenceHint apu_preference_hint() const;
-
   std::string accelerator_binary_file() const;
 
   std::string accelerator_storage_file() const;
@@ -96,8 +89,6 @@ class MaceEngineCfgImpl {
   AcceleratorCachePolicy accelerator_cache_policy_;
   std::string accelerator_binary_file_;
   std::string accelerator_storage_file_;
-  uint8_t apu_boost_hint_;
-  APUPreferenceHint apu_preference_hint_;
   std::unordered_map<std::string, int> runtime_map_;
 };
 

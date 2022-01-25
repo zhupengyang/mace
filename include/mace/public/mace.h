@@ -50,7 +50,6 @@ enum RuntimeType {  // should not > RT_MAX
   RT_OPENCL = 2,
   RT_HEXAGON = 3,
   RT_HTA = 4,
-  RT_APU = 5,
   RT_HTP = 6,
 
   RT_NONE = 65534,
@@ -58,7 +57,7 @@ enum RuntimeType {  // should not > RT_MAX
 };
 
 // @Deprecated, replaced by RuntimeType
-enum DeviceType { CPU = 0, GPU = 2, HEXAGON = 3, HTA = 4, APU = 5, HTP = 6 };
+enum DeviceType { CPU = 0, GPU = 2, HEXAGON = 3, HTA = 4, HTP = 6 };
 
 // Must be the same as DataType
 enum IDataType {
@@ -164,14 +163,6 @@ enum AcceleratorCachePolicy {
   ACCELERATOR_CACHE_NONE = 0,
   ACCELERATOR_CACHE_STORE = 1,
   ACCELERATOR_CACHE_LOAD = 2,
-  APU_CACHE_LOAD_OR_STORE = 3,
-};
-
-// APU execution preferences.
-enum APUPreferenceHint{
-    NEURON_PREFER_LOW_POWER = 0,
-    NEURON_PREFER_FAST_SINGLE_ANSWER = 1,
-    NEURON_PREFER_SUSTAINED_SPEED = 2,
 };
 
 struct CallStats {
@@ -475,24 +466,6 @@ class MACE_API MaceEngineConfig {
   MaceStatus SetAcceleratorCache(AcceleratorCachePolicy policy,
                                  const std::string &binary_file,
                                  const std::string &storage_file);
-
-  /// \brief Set MTK APU hints.
-  ///
-  /// Caution: this function may hurt performance
-  /// if improper parameters provided.
-  ///
-  /// \param boost_hint: The hint for APU frequency, ranged between 0 (lowest)
-  ///    to 100 (highest).
-  /// \param preference_hint: For the compilation with preference set as
-  ///    NEURON_PREFER_SUSTAINED_SPEED, scheduler guarantees that the
-  ///    executing boost value would equal to the boost value hint. On the
-  ///    other hand, for the compilation with preference set as
-  ///    NEURON_PREFER_LOW_POWER, scheduler would try to save power by
-  ///    configuring the executing boost value with some value that is not
-  ///    higher than the boost value hint.
-  /// \return MaceStatus::MACE_SUCCESS for success, other for failure.
-  MaceStatus SetAPUHints(uint8_t boost_hint,
-                         APUPreferenceHint preference_hint);
 
  private:
   std::shared_ptr<MaceEngineCfgImpl> impl_;
