@@ -47,13 +47,6 @@ extern void RegisterHexagonHtaOpenclRuntime(RuntimeRegistry *runtime_registry);
 #endif  // MACE_ENABLE_OPENCL
 #endif  // MACE_ENABLE_HTA
 
-#ifdef MACE_ENABLE_MTK_APU
-extern void RegisterApuRuntime(RuntimeRegistry *runtime_registry);
-#ifdef MACE_ENABLE_RPCMEM
-extern void RegisterApuIonRuntime(RuntimeRegistry *runtime_registry);
-#endif  // MACE_ENABLE_RPCMEM
-#endif  // MACE_ENABLE_MTK_APU
-
 #ifdef MACE_ENABLE_QNN
 extern void RegisterQnnRuntime(RuntimeRegistry *runtime_registry);
 #ifdef MACE_ENABLE_OPENCL
@@ -87,13 +80,6 @@ void RegisterAllRuntimes(RuntimeRegistry *runtime_registry) {
 #endif  // MACE_ENABLE_OPENCL
 #endif  // MACE_ENABLE_HTA
 
-#ifdef MACE_ENABLE_MTK_APU
-  RegisterApuRuntime(runtime_registry);
-#ifdef MACE_ENABLE_RPCMEM
-  RegisterApuIonRuntime(runtime_registry);
-#endif  // MACE_ENABLE_RPCMEM
-#endif  // MACE_ENABLE_MTK_APU
-
 #ifdef MACE_ENABLE_QNN
   RegisterQnnRuntime(runtime_registry);
 #ifdef MACE_ENABLE_OPENCL
@@ -111,11 +97,6 @@ RuntimeSubType SmartGetRuntimeSubType(const RuntimeType runtime_type,
   if (runtime_context->context_type == RCT_ION) {
     auto ion_rct = static_cast<IonRuntimeContext *>(runtime_context);
     if (ion_rct->rpcmem && ion_rct->rpcmem->IsRpcmemSupported()) {
-#ifdef MACE_ENABLE_MTK_APU
-      if (runtime_type == RuntimeType::RT_APU) {
-        sub_type = RuntimeSubType::RT_SUB_ION;
-      }
-#endif  // MACE_ENABLE_MTK_APU
 #ifdef MACE_ENABLE_OPENCL
       if (runtime_type == RuntimeType::RT_CPU) {
         sub_type = RuntimeSubType::RT_SUB_ION;
