@@ -25,7 +25,6 @@ enum NetType {
   NT_OPENCL,
   NT_HEXAGON,
   NT_HTA,
-  NT_APU,
 };
 
 enum NetSubType {

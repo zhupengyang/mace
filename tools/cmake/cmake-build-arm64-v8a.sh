@@ -14,8 +14,6 @@ MACE_ENABLE_CPU=OFF
 MACE_ENABLE_OPENCL=OFF
 MACE_ENABLE_HEXAGON_DSP=OFF
 MACE_ENABLE_HEXAGON_HTA=OFF
-MACE_ENABLE_MTK_APU=OFF
-MACE_MTK_APU_VERSION=-1
 if [[ "$RUNTIME" == "CPU" ]]; then
     MACE_ENABLE_NEON=ON
     MACE_ENABLE_CPU=ON
@@ -31,13 +29,6 @@ elif [[ "$RUNTIME" == "HTA" ]]; then
 elif [[ "$RUNTIME" == "HTP" ]]; then
     MACE_ENABLE_QNN=ON
     MACE_ENABLE_OPENCL=ON
-elif [[ "$RUNTIME" == "APU" ]]; then
-    MACE_ENABLE_MTK_APU=ON
-    set +e
-    python tools/python/apu_utils.py get-version --target_abi=arm64-v8a
-    MACE_MTK_APU_VERSION=`echo $?`
-    echo "The apu version is ${MACE_MTK_APU_VERSION}"
-    set -e
 fi
 
 MACE_ENABLE_CODE_MODE=OFF
@@ -67,8 +58,6 @@ cmake -DANDROID_ABI="arm64-v8a" \
       -DMACE_ENABLE_HEXAGON_DSP=${MACE_ENABLE_HEXAGON_DSP}   \
       -DMACE_ENABLE_HEXAGON_HTA=${MACE_ENABLE_HEXAGON_HTA}   \
       -DMACE_ENABLE_QNN=${MACE_ENABLE_QNN}                   \
-      -DMACE_ENABLE_MTK_APU=${MACE_ENABLE_MTK_APU}           \
-      -DMACE_MTK_APU_VERSION=${MACE_MTK_APU_VERSION}         \
       -DMACE_ENABLE_BFLOAT16=${MACE_ENABLE_BFLOAT16}         \
       -DMACE_ENABLE_OPT_SIZE=ON           \
       -DMACE_ENABLE_OBFUSCATE=ON          \
@@ -80,8 +69,3 @@ cmake -DANDROID_ABI="arm64-v8a" \
       ../../..
 make -j$(nproc) && make install
 cd ../../..
-
-# Detect the plugin-device and copy the valid so to the output dir
-if [[ "$RUNTIME" == "APU" ]]; then
-    python tools/python/apu_utils.py copy-so-files --target_abi arm64-v8a --apu_path $LIB_DIR
-fi

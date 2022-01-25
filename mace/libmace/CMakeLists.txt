@@ -60,12 +60,6 @@ if(MACE_ENABLE_HEXAGON)
   set(RUNTIME_LIBS ${RUNTIME_LIBS}
           "addlib ${CMAKE_BINARY_DIR}/mace/runtimes/hexagon/libhexagon_runtime.a\n")
 endif(MACE_ENABLE_HEXAGON)
-if(MACE_ENABLE_MTK_APU)
-  set(FLOW_LIBS ${FLOW_LIBS}
-          "addlib ${CMAKE_BINARY_DIR}/mace/flows/apu/libapu_flow.a\n")
-  set(RUNTIME_LIBS ${RUNTIME_LIBS}
-          "addlib ${CMAKE_BINARY_DIR}/mace/runtimes/apu/libapu_runtime.a\n")
-endif(MACE_ENABLE_MTK_APU)
 
 string(CONCAT PORT_LIBS_MRI ${PORT_LIBS} "")
 string(CONCAT FLOW_LIBS_MRI ${FLOW_LIBS} "")

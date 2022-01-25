@@ -51,8 +51,6 @@ cc_library(
         "-DMACE_ENABLE_HEXAGON",
     ]) + if_hta_enabled([
         "-DMACE_ENABLE_HTA",
-    ]) + if_apu_enabled([
-        "-DMACE_ENABLE_MTK_APU",
     ]) + if_qnn_enabled([
         "-DMACE_ENABLE_QNN",
     ]) + if_rpcmem_enabled([

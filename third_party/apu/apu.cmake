@@ -1,15 +1,9 @@
-set(APU_INSTALL_DIR  "${PROJECT_SOURCE_DIR}/third_party/apu")
-set(APU_INCLUDE_DIR  "${APU_INSTALL_DIR}")
-
-include_directories(SYSTEM "${APU_INCLUDE_DIR}")
-
 if(MACE_MTK_APU_VERSION EQUAL 1)
   set(APU-FRONTEND "${APU_INSTALL_DIR}/android_Q/mt67xx/libapu-frontend.so")
 elseif(MACE_MTK_APU_VERSION EQUAL 2)
   set(APU-FRONTEND "${APU_INSTALL_DIR}/android_Q/mt68xx/libapu-frontend.so")
 elseif(MACE_MTK_APU_VERSION EQUAL 3)
   set(APU-FRONTEND "${APU_INSTALL_DIR}/android_R/libapu-frontend.so")
-elseif(MACE_MTK_APU_VERSION EQUAL 4)
 else()
   message(FATAL_ERROR "Invalid MTK APU version: " ${MACE_MTK_APU_VERSION})
 endif()
